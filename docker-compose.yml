@@ -39,8 +39,8 @@ services:
     networks:
       - dokploy-network
     depends_on:
-      - db-dokploy-postgres
-      - db-dokploy-redis
+      - postgres
+      - redis
 
   traefik:
     image: traefik:v3.1.2
@@ -58,7 +58,7 @@ services:
     networks:
       - dokploy-network
     depends_on:
-      - app-dokploy
+      - dokploy
 
 networks:
   dokploy-network:
