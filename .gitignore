@@ -1,5 +1,7 @@
 /.vscode
 /.idea
+/data
+!/data/dokploy-data/traefik
 
 *.log
 *.pem
