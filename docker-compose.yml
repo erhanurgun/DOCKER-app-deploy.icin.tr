@@ -44,7 +44,7 @@ services:
 
   app-dokploy-traefik:
     image: traefik:v3.1.2
-    container_name: app-traefik
+    container_name: app-dokploy-traefik
     restart: unless-stopped
     ports:
       - "10080:80"
