@@ -4,7 +4,7 @@ services:
   db-dokploy-postgres:
     image: postgres:16
     container_name: db-dokploy-postgres
-    restart: unless-stopped
+    restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-dokploy}
       POSTGRES_DB: ${POSTGRES_DB:-dokploy}
@@ -26,7 +26,7 @@ services:
   app-dokploy:
     image: dokploy/dokploy:latest
     container_name: app-dokploy
-    restart: unless-stopped
+    restart: always
     environment:
       ADVERTISE_ADDR: ${ADVERTISE_ADDR:-159.69.219.251}
       BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-your-secret-key-here}
@@ -45,7 +45,7 @@ services:
   app-dokploy-traefik:
     image: traefik:v3.1.2
     container_name: app-dokploy-traefik
-    restart: unless-stopped
+    restart: always
     ports:
       - "10080:80"
       - "10443:443"
