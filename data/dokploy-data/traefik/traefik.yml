@@ -32,8 +32,8 @@ providers:
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: your-email@example.com  # E-posta adresinizi girin
-      storage: /etc/traefik/acme.json
+      email: erho@duck.com
+      storage: /etc/dokploy/traefik/acme.json
       httpChallenge:
         entryPoint: web
       # Staging ortamı için (test amaçlı):
