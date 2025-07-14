@@ -1,7 +1,7 @@
 name: wwwdeployicintr
 
 services:
-  db-dokploypostgres:
+  db-dokploy-postgres:
     image: postgres:16
     container_name: db-dokploy-postgres
     restart: unless-stopped
@@ -14,7 +14,7 @@ services:
     networks:
       - dokploy-network
 
-  db-dokployredis:
+  db-dokploy-redis:
     image: redis:7
     container_name: db-dokploy-redis
     restart: unless-stopped
