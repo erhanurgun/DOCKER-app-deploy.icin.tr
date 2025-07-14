@@ -1,0 +1,70 @@
+name: wwwdeployicintr
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: dokploy-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: dokploy
+      POSTGRES_DB: dokploy
+      POSTGRES_PASSWORD: amukds4wi9001583845717ad2
+    volumes:
+      - ./data/postgres-data:/var/lib/postgresql/data
+    networks:
+      - dokploy-network
+
+  redis:
+    image: redis:7
+    container_name: dokploy-redis
+    restart: unless-stopped
+    volumes:
+      - ./data/redis-data:/data
+    networks:
+      - dokploy-network
+
+  dokploy:
+    image: dokploy/dokploy:latest
+    container_name: dokploy
+    restart: unless-stopped
+    environment:
+      # Advertise address'i manuel olarak ayarlamanız gerekebilir
+      # ADVERTISE_ADDR: 192.168.1.100  # Kendi IP adresinizi girin
+      ADVERTISE_ADDR: ${ADVERTISE_ADDR:-}
+    ports:
+      - "10207:3000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/dokploy-data:/etc/dokploy
+      - ./data/dokploy-docker-config:/root/.docker
+    networks:
+      - dokploy-network
+    depends_on:
+      - postgres
+      - redis
+
+  traefik:
+    image: traefik:v3.1.2
+    container_name: dokploy-traefik
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./data/dokploy-data/traefik/traefik.yml:/etc/traefik/traefik.yml
+      - ./data/dokploy-data/traefik/dynamic:/etc/dokploy/traefik/dynamic
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - dokploy-network
+    depends_on:
+      - dokploy
+
+networks:
+  dokploy-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:
+  dokploy-docker-config:

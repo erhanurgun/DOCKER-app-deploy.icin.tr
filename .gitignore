@@ -1,0 +1,9 @@
+/.vscode
+/.idea
+
+*.log
+*.pem
+*.key
+
+.env
+!.env.example
