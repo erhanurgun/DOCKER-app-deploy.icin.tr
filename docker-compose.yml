@@ -1,7 +1,7 @@
 name: wwwdeployicintr
 
 services:
-  postgres:
+  db-dokploypostgres:
     image: postgres:16
     container_name: db-dokploy-postgres
     restart: unless-stopped
@@ -14,7 +14,7 @@ services:
     networks:
       - dokploy-network
 
-  redis:
+  db-dokployredis:
     image: redis:7
     container_name: db-dokploy-redis
     restart: unless-stopped
@@ -23,7 +23,7 @@ services:
     networks:
       - dokploy-network
 
-  dokploy:
+  app-dokploy:
     image: dokploy/dokploy:latest
     container_name: app-dokploy
     restart: unless-stopped
@@ -42,9 +42,9 @@ services:
       - db-dokploy-postgres
       - db-dokploy-redis
 
-  traefik:
+  app-dokploy-traefik:
     image: traefik:v3.1.2
-    container_name: app-dokploy-traefik
+    container_name: app-traefik
     restart: unless-stopped
     ports:
       - "10080:80"
